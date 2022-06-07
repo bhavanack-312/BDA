@@ -1,0 +1,140 @@
+hduser@bmsce-Precision-T1700:~$ start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+Starting namenodes on [localhost]
+hduser@localhost's password: 
+localhost: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-bmsce-Precision-T1700.out
+hduser@localhost's password: 
+localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-bmsce-Precision-T1700.out
+Starting secondary namenodes [0.0.0.0]
+hduser@0.0.0.0's password: 
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-bmsce-Precision-T1700.out
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-bmsce-Precision-T1700.out
+hduser@localhost's password: 
+localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-bmsce-Precision-T1700.out
+hduser@bmsce-Precision-T1700:~$ jps
+5617 Jps
+4789 DataNode
+5493 NodeManager
+4614 NameNode
+5161 ResourceManager
+5002 SecondaryNameNode
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /bhavana
+hduser@bmsce-Precision-T1700:~$ hadoop fs -la /
+-la: Unknown command
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 6 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:52 /SharmaJi
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 14:57 /bhavana
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 15:22 /lochan
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:09 /u1
+-rw-r--r--   1 hduser supergroup         19 2022-05-31 11:01 /user
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:08 /vallisha
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/bhavana/demo.txt
+put: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/bhavana/sample.txt
+put: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/bhavana/demo.txt
+put: `.': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403 /bhavana/demo.txt
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /bhavana
+Found 1 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 15:08 /bhavana/demo.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/demo.txt
+cat: `/bhavana/demo.txt': Is a directory
+hduser@bmsce-Precision-T1700:~$ hadoop fs -rm -r -f /bhavana/demo.txt
+22/06/03 15:12:36 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+Deleted /bhavana/demo.txt
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /bhavana
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/demo.txt /bhavana/demo.txt
+put: `/home/hduser/Desktop/1BM20CS403/demo.txt': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/sample.txt /bhavana/demo.txt
+put: `/home/hduser/Desktop/1BM20CS403/sample.txt': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/sample.txt /bhavana/demo.txt
+put: `/home/hduser/Desktop/1BM20CS403/sample.txt': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/sample.txt /bhavana/demo.txt
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /bhavana
+Found 1 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /bhavana/demo.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/demo.txt
+sample text
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/demo.txt
+sample text
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/sample.txt /bhavana/demo.txt
+put: `/bhavana/demo.txt': File exists
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/1BM20CS403/sample.txt /bhavana/demo1.txt
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /bhavana
+Found 2 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /bhavana/demo.txt
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/demo1.txt
+"Hello,Welcome to Hadoop!!!!"
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyFromLocal /home/hduser/Desktop/1BM20CS403/sample1.txt /bhavana/sample1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /bhavana
+Found 3 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /bhavana/demo.txt
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:23 /bhavana/sample1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/sample1.txt
+sample text
+hduser@bmsce-Precision-T1700:~$ hadoop fs -rm -r -f /bhavana/sample1.txt
+22/06/03 15:24:40 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+Deleted /bhavana/sample1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /bhavana
+Found 2 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /bhavana/demo.txt
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyFromLocal /home/hduser/Desktop/1BM20CS403/sample1.txt /bhavana/demo2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /bhavana
+Found 3 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /bhavana/demo.txt
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-03 15:25 /bhavana/demo2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /bhavana/demo2.txt
+sample1 text
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -getmerge /bhavana/demo.txt /bhavana/dem2.txt /home/hduser/Desktop/1BM20CS403/Merge.txt
+getmerge: `/bhavana/dem2.txt': No such file or directory
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -getmerge /bhavana/demo.txt /bhavana/demo2.txt /home/hduser/Desktop/1BM20CS403/Merge.txt
+hduser@bmsce-Precision-T1700:~$ cat /home/hduser/Desktop/1BM20CS403/Merge.txt
+sample text
+sample1 text
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -copyToLocal /bhavana/demo.txt /home/hduser/Desktop/1BM20CS403/demo_copy.txt
+hduser@bmsce-Precision-T1700:~$ cat /home/hduser/Desktop/1BM20CS403/demo_copy.txt
+sample text
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /u1
+Found 3 items
+-rw-r--r--   1 hduser supergroup         19 2022-05-31 11:08 /u1/ggg
+-rw-r--r--   1 hduser supergroup         12 2022-06-01 09:41 /u1/sample.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-01 10:09 /u1/sample1.txt
+hduser@bmsce-Precision-T1700:~$ hadoop dfs -cat /u1/ggg
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+asdad sdafsdaf sds
+hduser@bmsce-Precision-T1700:~$ ^C
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mv /bhavana/demo.txt /u1/demo.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /bhavana
+Found 2 items
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-03 15:25 /bhavana/demo2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /u1
+Found 4 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /u1/demo.txt
+-rw-r--r--   1 hduser supergroup         19 2022-05-31 11:08 /u1/ggg
+-rw-r--r--   1 hduser supergroup         12 2022-06-01 09:41 /u1/sample.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-01 10:09 /u1/sample1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cp /bhavana/demo2.txt /u1/demo2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /bhavana
+Found 2 items
+-rw-r--r--   1 hduser supergroup         30 2022-06-03 15:19 /bhavana/demo1.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-03 15:25 /bhavana/demo2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /u1
+Found 5 items
+-rw-r--r--   1 hduser supergroup         12 2022-06-03 15:16 /u1/demo.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-03 15:45 /u1/demo2.txt
+-rw-r--r--   1 hduser supergroup         19 2022-05-31 11:08 /u1/ggg
+-rw-r--r--   1 hduser supergroup         12 2022-06-01 09:41 /u1/sample.txt
+-rw-r--r--   1 hduser supergroup         13 2022-06-01 10:09 /u1/sample1.txt
+hduser@bmsce-Precision-T1700:~$ 
+
+
