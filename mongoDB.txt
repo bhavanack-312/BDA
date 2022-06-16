@@ -1,0 +1,48 @@
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("11abcbea-0f1b-49d8-967f-00bda6414656") }
+MongoDB server version: 3.6.8
+Server has startup warnings: 
+2022-06-08T11:50:37.266+0530 I STORAGE  [initandlisten] 
+2022-06-08T11:50:37.266+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2022-06-08T11:50:37.266+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2022-06-08T11:50:40.890+0530 I CONTROL  [initandlisten] 
+2022-06-08T11:50:40.890+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2022-06-08T11:50:40.890+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2022-06-08T11:50:40.890+0530 I CONTROL  [initandlisten] 
+> use customer
+switched to db customer
+> db;
+customer
+> db.createCollection("customers");
+{ "ok" : 1 }
+> db.customers.insert({custid:100,acctbal:12000,accttype:"savings"});
+WriteResult({ "nInserted" : 1 })
+> db.customers.insert({custid:101,acctbal:10000,accttype:"savings"});
+WriteResult({ "nInserted" : 1 })
+> db.customers.insert({custid:102,acctbal:20000,accttype:"current"});
+WriteResult({ "nInserted" : 1 })
+> db.customers.insert({custid:103,acctbal:30000,accttype:"current"});
+WriteResult({ "nInserted" : 1 })
+> db.customers.aggregate({$group:{_id:"$custid",totaccbal:{$sum:"$accbal"}}});
+{ "_id" : 102, "totaccbal" : 0 }
+{ "_id" : 103, "totaccbal" : 0 }
+{ "_id" : 100, "totaccbal" : 0 }
+{ "_id" : 101, "totaccbal" : 0 }
+> db.customers.aggregate({$group:{_id:"$custid",totaccbal:{$sum:"$acctbal"}}});
+{ "_id" : 102, "totaccbal" : 20000 }
+{ "_id" : 103, "totaccbal" : 30000 }
+{ "_id" : 100, "totaccbal" : 12000 }
+{ "_id" : 101, "totaccbal" : 10000 }
+> db.customers.aggregate({$match:{accttype:"savings"}},{$group:{_id:"$custid",totaccbal:{$sum:"$acctbal"}}});
+{ "_id" : 101, "totaccbal" : 10000 }
+{ "_id" : 100, "totaccbal" : 12000 }
+> db.customers.aggregate({$match:{accttype:"savings"}},{$group:{_id:"$custid",totaccbal:{$sum:"$acctbal"}},{$match:{totalacctbal:{$gt:10000}}});
+... 
+... 
+> db.customers.aggregate({$match:{accttype:"savings"}},{$group:{_id:"$custid",totaccbal:{$sum:"$acctbal"},{$match:{totalaccbal:{$gt:10000}}}}});
+2022-06-08T13:26:42.580+0530 E QUERY    [thread1] SyntaxError: invalid property id @(shell):1:104
+> db.customers.aggregate({$match:{accttype:"savings"}},{$group:{_id:"$custid",totaccbal:{$sum:"$acctbal"}}},{$match:{totaccbal:{$gt:10000}}});
+{ "_id" : 100, "totaccbal" : 12000 }
+> 
+
+
