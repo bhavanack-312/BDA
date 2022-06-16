@@ -1,0 +1,58 @@
+cqlsh:vallisha> create table library_info( stud_id int, counter_value counter, stud_name text, book_name text, book_id int, date_of_issue date, primary key (stud_id,stud_name,book_name,book_id,date_of_issue));
+cqlsh:vallisha> drop table library_info;
+cqlsh:vallisha> create table library_info( stud_id int, counter_value counter, book_name text, stud_name text,book_id int, date_of_issue date, primary key (stud_id,book_name,stud_name,book_id,date_of_issue));
+cqlsh:vallisha> begin counter batch update library_info set counter_value+=1 where stud_id=112 and stud_name='Ankit' and book_name='BDA' and  book_id=1 and date_of_issue='2022-06-13'; update library_info set counter_value+=1 where stud_id=112 and stud_name='Ankit' and book_name='BDA' and  book_id=1 and date_of_issue='2022-06-13'; update library_info set counter_value+=1 where stud_id=115 and stud_name='Parul' and book_name='ML' and  book_id=2 and date_of_issue='2022-01-15'; update library_info set counter_value+=1 where stud_id=125 and stud_name='Krishna' and book_name='DL' and  book_id=4 and date_of_issue='2022-01-14'; apply batch;
+cqlsh:vallisha> select * from library_info;
+
+ stud_id | book_name | stud_name | book_id | date_of_issue | counter_value
+---------+-----------+-----------+---------+---------------+---------------
+     125 |        DL |   Krishna |       4 |    2022-01-14 |             1
+     112 |       BDA |     Ankit |       1 |    2022-06-13 |             2
+     115 |        ML |     Parul |       2 |    2022-01-15 |             1
+
+(3 rows)
+cqlsh:vallisha> select counter_value from library_info where stud_id=112 and book_name='BDA';
+
+ counter_value
+---------------
+             2
+
+(1 rows)
+cqlsh:vallisha> copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) to /home/bmsce/Documents/1BM19CS177/BDA-Lab
+Invalid syntax at line 1, char 88
+  copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) to /home/bmsce/Documents/1BM19CS177/BDA-Lab
+                                                                                         ^
+cqlsh:vallisha> copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) to /home/bmsce/Documents/1BM19CS177/BDA-Lab/Library_Info.csv with header=true and delimiter=',';
+Invalid syntax at line 1, char 88
+  copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) to /home/bmsce/Documents/1BM19CS177/BDA-Lab/Library_Info.csv with header=true and delimiter=',';
+                                                                                         ^
+cqlsh:vallisha> copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) to '/home/bmsce/Documents/1BM19CS177/BDA-Lab/Library_Info.csv' with header=true and delimiter=',';
+Using 11 child processes
+
+Starting copy of vallisha.library_info with columns [stud_id, book_name, stud_name, book_id, date_of_issue, counter_value].
+Processed: 3 rows; Rate:      25 rows/s; Avg. rate:      25 rows/s
+3 rows exported to 1 files in 0.148 seconds.
+cqlsh:vallisha> copy libinfo (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) from '/home/bmsce/Documents/1BM19CS177/BDA-Lab/Library_Info.csv' with header=true and delimiter=',';
+Column family 'libinfo' not found
+cqlsh:vallisha> truncate library_info;
+cqlsh:vallisha> select * from library_info;
+
+ stud_id | book_name | stud_name | book_id | date_of_issue | counter_value
+---------+-----------+-----------+---------+---------------+---------------
+
+(0 rows)
+cqlsh:vallisha> copy library_info (stud_id,book_name,stud_name,book_id,date_of_issue,counter_value) from '/home/bmsce/Documents/1BM19CS177/BDA-Lab/Library_Info.csv' with header=true and delimiter=',';
+Using 11 child processes
+
+Starting copy of vallisha.library_info with columns [stud_id, book_name, stud_name, book_id, date_of_issue, counter_value].
+Processed: 3 rows; Rate:       5 rows/s; Avg. rate:       7 rows/s
+3 rows imported from 1 files in 0.424 seconds (0 skipped).
+cqlsh:vallisha> select * from library_info;
+
+ stud_id | book_name | stud_name | book_id | date_of_issue | counter_value
+---------+-----------+-----------+---------+---------------+---------------
+     125 |        DL |   Krishna |       4 |    2022-01-14 |             1
+     112 |       BDA |     Ankit |       1 |    2022-06-13 |             2
+     115 |        ML |     Parul |       2 |    2022-01-15 |             1
+
+(3 rows)
